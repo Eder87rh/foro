@@ -28,7 +28,7 @@ class CreatePostsTest extends FeatureTestCase
 		$this->see($title);
 	}
 
-	public function test_creating_a_post_requires_authentication()
+	function test_creating_a_post_requires_authentication()
 	{
 		
 		//When
@@ -36,4 +36,15 @@ class CreatePostsTest extends FeatureTestCase
 			 ->seePageIs(route('login'));
 
 	}
+
+	function test_create_post_form_validation()
+	{
+		$this->actingAs($this->defaultUser())
+			->visit(route('posts.create'))
+			->press('Publicar')
+			->seePageIs(route('posts.create'))
+			->seeInElement('#field_title .help-block','El campo título es obligatorio')
+			->seeInElement('#field_content .help-block','El campo contenido es obligatorio');
+	}
+
 }
