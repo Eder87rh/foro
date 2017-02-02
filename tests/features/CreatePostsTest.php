@@ -27,4 +27,13 @@ class CreatePostsTest extends FeatureTestCase
 		//Test user is redirected to post details after creating it
 		$this->see($title);
 	}
+
+	public function test_creating_a_post_requires_authentication()
+	{
+		
+		//When
+		$this->visit(route('posts.create'))
+			 ->seePageIs(route('login'));
+
+	}
 }
