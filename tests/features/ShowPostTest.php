@@ -24,6 +24,8 @@ class ShowPostTest extends TestCase
 
         $user->posts()->save($post); // asigna user_id al post automaticamente
 
+        //dd(route('posts.show',$post));
+
 		//When
         $this->visit(route('posts.show',$post))//posts/12345
         	->seeInElement('h1',$post->title)
