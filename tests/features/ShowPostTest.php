@@ -15,8 +15,6 @@ class ShowPostTest extends TestCase
 
     		]);
 
-
-
         $post = factory(\App\Post::class)->make([
         		'title' => 'Este es el titulo del post',
         		'content' => 'Este es el contenido del post'
@@ -24,14 +22,36 @@ class ShowPostTest extends TestCase
 
         $user->posts()->save($post); // asigna user_id al post automaticamente
 
-        //dd(route('posts.show',$post));
+         //dd($post->url);
 
 		//When
-        $this->visit(route('posts.show',$post))//posts/12345
+        $this->visit($post->url)//posts/12345
         	->seeInElement('h1',$post->title)
         	->see($post->content)
         	->see($user->name);
+    }
 
+
+    function test_old_url_redirect_to_new_url()
+    {
+
+    	//Having
+	    $user = $this->defaultUser();
+
+	    $post = factory(\App\Post::class)->make([
+	        'title' => 'Old title',
+	    ]); 
+
+	    $user->posts()->save($post); // asigna user_id al post automaticamente
+
+	    $url = $post->url;
+
+	    $post->update([ 'title' => 'New title' ]);
+
+	    $this->visit($url)
+	    	->seePageIs($post->url);
 
     }
+
+
 }

@@ -11,6 +11,7 @@ class PostModelTest extends TestCase
         $post = new Post([
         	'title' => 'Como instalar laravel'
         ]);
+
     
         $this->assertSame('como-instalar-laravel',$post->slug);
     }
