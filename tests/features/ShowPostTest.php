@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ShowPostTest extends TestCase
+
+class ShowPostTest extends FeatureTestCase
 {
 
     public function test_a_user_can_see_a_post_details()
@@ -15,20 +13,20 @@ class ShowPostTest extends TestCase
 
     		]);
 
-        $post = factory(\App\Post::class)->make([
+        $post = $this->createPost([
         		'title' => 'Este es el titulo del post',
-        		'content' => 'Este es el contenido del post'
+        		'content' => 'Este es el contenido del post',
+        		'user_id' => $user->id
         	]);
 
-        $user->posts()->save($post); // asigna user_id al post automaticamente
+        //dd(\App\User::all()->toArray());
 
-         //dd($post->url);
 
 		//When
         $this->visit($post->url)//posts/12345
         	->seeInElement('h1',$post->title)
         	->see($post->content)
-        	->see($user->name);
+        	->see('Eder Ramírez');
     }
 
 
@@ -36,13 +34,10 @@ class ShowPostTest extends TestCase
     {
 
     	//Having
-	    $user = $this->defaultUser();
 
-	    $post = factory(\App\Post::class)->make([
+	    $post = $this->createPost([
 	        'title' => 'Old title',
 	    ]); 
-
-	    $user->posts()->save($post); // asigna user_id al post automaticamente
 
 	    $url = $post->url;
 
