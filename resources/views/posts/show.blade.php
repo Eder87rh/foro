@@ -4,7 +4,8 @@
 @section('content')
 
 	<h1>{{ $post->title }}</h1>
-	<p>{{ $post->content }}</p>
+	 {{-- {!! Markdown::convertToHtml(e($post->content)) !!}	 --}}
+	 {!! $post->safe_html_content !!}
 	<p>{{ $post->user->name }}</p>
 
 	<h4>Comentarios</h4>
@@ -19,6 +20,9 @@
 	
 	@foreach($post->latestComments as $comment)
 		<article class="{{ $comment->answer ? 'answer' : ''	}}">
+
+			{{-- TODO: Support markdown in comment as well! --}}
+
 			{{ $comment->comment }}
 
 			{{-- @can('accept',$comment) --}}
