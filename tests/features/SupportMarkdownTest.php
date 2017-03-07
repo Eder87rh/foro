@@ -1,5 +1,8 @@
 <?php
 
+use App\Comment;
+use App\User;
+
 
 
 class SupportMarkdownTest extends FeatureTestCase
@@ -14,6 +17,20 @@ class SupportMarkdownTest extends FeatureTestCase
 
         $this->visit($post->url)
         		->seeInElement('strong',$importantText);
+
+    }
+
+    function test_the_comment_supporst_markdown()
+    {
+    	$importantText = "Otro texto importante";
+
+
+    	$comment = factory(Comment::class)->create([
+    			'comment' => "La primera parte. **$importantText**. La última parte."
+    		]);
+
+    	$this->visit($comment->post->url)
+    		->seeInElement('strong',$importantText);
 
     }
 
@@ -43,7 +60,7 @@ class SupportMarkdownTest extends FeatureTestCase
     	$this->visit($post->url)
     		->dontSee($xssAttack)
     		->seeText("texto normal")
-    		->seeText($xssAttack);//TODO Fix this!
+    		->seeText($xssAttack);
 
     }
 

@@ -8,22 +8,31 @@
 	 {!! $post->safe_html_content !!}
 	<p>{{ $post->user->name }}</p>
 
+	@if(auth()->check() && !auth()->user()->isSubscribedTo($post))
+		{!! Form::open(['route' => ['posts.subscribe',$post],'method' => 'POST' ]) !!}
+			<button type="submit"> Subscribirse al post</button>
+		{!! Form::close() !!}
+	@endif
+
 	<h4>Comentarios</h4>
 
-	{!! Form::open(['route' => ['comments.store',$post], 'method' => 'POST']) !!}
-		{!! Field::textarea('comment') !!}
-		<button type="submit">
-			Publicar comentario
-		</button>
-	{!! Form::close()  !!}
+
+	
+		{!! Form::open(['route' => ['comments.store',$post], 'method' => 'POST']) !!}
+			{!! Field::textarea('comment') !!}
+			<button type="submit">
+				Publicar comentario
+			</button>
+		{!! Form::close()  !!}
+	
 
 	
 	@foreach($post->latestComments as $comment)
 		<article class="{{ $comment->answer ? 'answer' : ''	}}">
 
-			{{-- TODO: Support markdown in comment as well! --}}
 
-			{{ $comment->comment }}
+			{{-- {{ $comment->comment }} --}}
+			{!! $comment->safe_html_content !!}
 
 			{{-- @can('accept',$comment) --}}
 			@if(Gate::allows('accept',$comment) && !$comment->answer)

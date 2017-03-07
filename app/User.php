@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Post;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +55,22 @@ class User extends Authenticatable
     public function owns(Model $model)
     {
         return $this->id === $model->user_id; 
+    }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Post::class,'subscriptions');
+    }
+
+    public function isSubscribedTo(Post $post)
+    {
+        return $this->subscriptions()->where('post_id',$post->id)->count() > 0;
+      
+    }
+
+    public function subscribeTo(Post $post)
+    {
+        $this->subscriptions()->attach($post);
     }
 
 }
