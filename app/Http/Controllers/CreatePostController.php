@@ -21,10 +21,13 @@ class CreatePostController extends Controller
     		]);
 
 
-    	$post = new Post($request->all());
+        $post = auth()->user()->createPost($request->all());
+    	// $post = new Post($request->all());
 
-    	auth()->user()->posts()->save($post);
+    	// auth()->user()->posts()->save($post);
 
- 		return "Post: ". $post->title;
+     //    auth()->user()->subscribeTo($post);
+
+ 		return redirect($post->url);
     }
 }
