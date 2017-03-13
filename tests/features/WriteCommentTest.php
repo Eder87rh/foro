@@ -4,6 +4,8 @@ class WriteCommentTest extends FeatureTestCase
 {
    function test_a_user_can_wirte_a_comment()
     {
+        Notification::fake();
+
         $post = $this->createPost();
         $this->actingAs($this->defaultUser())
         	->visit($post->url)

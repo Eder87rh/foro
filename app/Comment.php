@@ -11,6 +11,10 @@ class Comment extends Model
 {
     protected $fillable = ['comment','post_id'];
  
+    function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function post()
     {
