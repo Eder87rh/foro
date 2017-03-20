@@ -18,7 +18,7 @@ Route::get('/', [
     'as' => 'posts.index'
 ]);
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
