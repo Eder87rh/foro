@@ -1,9 +1,12 @@
 <?php
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Laravel\BrowserKitTesting\TestCase;
+use Tests\CreatesApplication;
+use Tests\TestsHelper;
 
 class FeatureTestCase extends TestCase
 {
-	use DatabaseTransactions;
+	use CreatesApplication, TestsHelper,DatabaseTransactions;
 
 	function seeErrors(array $fields)
 	{
@@ -11,8 +14,7 @@ class FeatureTestCase extends TestCase
 		foreach ($fields as $name => $errors) {
 			foreach ((array) $errors  as $message) {
 				$this->seeInElement(
-					"#field_{$name} .help-block",
-					$message
+					"#field_{$name} .help-block", $message
 					);
 			}
 		}
