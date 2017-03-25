@@ -99,6 +99,11 @@ class User extends Authenticatable
         $this->subscriptions()->detach($post);
     }
 
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
 
 
 }
