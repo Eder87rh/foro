@@ -57,8 +57,6 @@ class CreatePostsTest extends FeatureTestCase
 					'title' => 'El campo título es obligatorio',
 					'content' => 'El campo contenido es obligatorio'
 				]);
-			// ->seeInElement('#field_title .help-block','El campo título es obligatorio')
-			// ->seeInElement('#field_content .help-block','El campo contenido es obligatorio');
 	}
 
 }
