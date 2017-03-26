@@ -49,9 +49,7 @@ class CreatePostsTest extends DuskTestCase
         $this->assertDatabaseHas('subscriptions',[
                 'user_id' => $user->id,
                 'post_id' => $post->id
-            ]); 
-
-        
+            ]);  
     }
 
     function test_creating_a_post_requires_authentication()
@@ -60,7 +58,6 @@ class CreatePostsTest extends DuskTestCase
             $browser->visitRoute('posts.create')
                     ->assertRouteIs('token');
         });
-        
 
     }
 
